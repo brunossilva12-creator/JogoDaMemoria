@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jogo da Memória</title>
+
+    <!-- Arquivo CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <header class="game-header">
+
+            <h1>🎮 Jogo da Memória</h1>
+
+            <p class="subtitle">
+                Encontre todos os 6 pares!
+            </p>
+
+        </header>
+
+
+        <!-- PAINEL DE INFORMAÇÕES -->
+        <section class="game-info">
+
+            <div class="info-box">
+                <span>Jogadas</span>
+                <strong id="moves">0</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Pares encontrados</span>
+                <strong id="pairs">0 / 6</strong>
+            </div>
+
+            <div class="info-box">
+                <span>Tempo</span>
+                <strong id="timer">00:00</strong>
+            </div>
+
+        </section>
+
+
+        <!-- TABULEIRO -->
+        <section id="game-board" class="game-board">
+            <!-- As cartas serão criadas pelo JavaScript -->
+        </section>
+
+
+        <!-- MENSAGEM DO JOGO -->
+        <div id="message" class="message">
+            Clique em duas cartas para começar!
+        </div>
+
+
+        <!-- BOTÃO REINICIAR -->
+        <button id="restart-button" class="restart-button">
+            🔄 Reiniciar Jogo
+        </button>
+
+    </main>
+
+
+    <!-- Modal de vitória -->
+    <div id="win-modal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="trophy">🏆</div>
+
+            <h2>Parabéns!</h2>
+
+            <p>Você encontrou todos os pares!</p>
+
+            <div class="result">
+
+                <p>
+                    Jogadas:
+                    <strong id="final-moves">0</strong>
+                </p>
+
+                <p>
+                    Tempo:
+                    <strong id="final-time">00:00</strong>
+                </p>
+
+            </div>
+
+            <button id="play-again-button" class="restart-button">
+                🔄 Jogar Novamente
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Arquivo JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>

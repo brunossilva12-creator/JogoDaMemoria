@@ -1,0 +1,587 @@
+/* =====================================================
+   CONFIGURAÇÕES GERAIS
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(135deg, #667eea, #764ba2);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px;
+}
+
+
+/* =====================================================
+   CONTAINER PRINCIPAL
+===================================================== */
+
+.game-container {
+    width: 100%;
+    max-width: 800px;
+
+    background-color: #ffffff;
+
+    border-radius: 20px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25);
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   CABEÇALHO
+===================================================== */
+
+.game-header h1 {
+    color: #333333;
+
+    font-size: 2.2rem;
+
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #777777;
+
+    font-size: 1rem;
+}
+
+
+/* =====================================================
+   PAINEL DE INFORMAÇÕES
+===================================================== */
+
+.game-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin: 25px 0;
+}
+
+.info-box {
+    background-color: #f5f6fa;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.info-box span {
+    color: #777777;
+
+    font-size: 0.9rem;
+}
+
+.info-box strong {
+    color: #333333;
+
+    font-size: 1.4rem;
+}
+
+
+/* =====================================================
+   TABULEIRO
+===================================================== */
+
+.game-board {
+    display: grid;
+
+    /*
+       4 colunas x 3 linhas = 12 cartas
+    */
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: 0 auto;
+}
+
+
+/* =====================================================
+   CARTA
+===================================================== */
+
+.card {
+    aspect-ratio: 1 / 1;
+
+    border: none;
+
+    background: transparent;
+
+    perspective: 1000px;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+
+/*
+   Parte interna da carta.
+   É ela que faz a animação de virar.
+*/
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+
+    transform-style: preserve-3d;
+
+    transition:
+        transform 0.6s ease;
+}
+
+
+/*
+   Quando a carta recebe a classe "flipped",
+   ela gira 180 graus.
+*/
+
+.card.flipped .card-inner,
+.card.matched .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+/* =====================================================
+   FRENTE E VERSO DA CARTA
+===================================================== */
+
+.card-front,
+.card-back {
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 15px;
+
+    backface-visibility: hidden;
+
+    -webkit-backface-visibility: hidden;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 3rem;
+
+    box-shadow:
+        0 5px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/* =====================================================
+   VERSO DA CARTA
+===================================================== */
+
+.card-back {
+    background:
+        linear-gradient(135deg, #4facfe, #00f2fe);
+
+    color: white;
+
+    font-size: 2.5rem;
+
+    transform: rotateY(0deg);
+}
+
+
+/* =====================================================
+   FRENTE DA CARTA
+===================================================== */
+
+.card-front {
+    background-color: #ffffff;
+
+    border: 3px solid #4facfe;
+
+    transform: rotateY(180deg);
+
+    /*
+       IMPORTANTE:
+       A frente começa escondida atrás do verso.
+    */
+}
+
+
+/* =====================================================
+   CARTA ENCONTRADA
+===================================================== */
+
+.card.matched .card-front {
+    border-color: #28a745;
+
+    background-color: #eaffef;
+}
+
+
+/* =====================================================
+   EFEITO HOVER
+===================================================== */
+
+.card:not(.flipped):not(.matched):hover .card-inner {
+    transform: translateY(-5px);
+}
+
+.card:not(.flipped):not(.matched):hover .card-back {
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+
+/*
+   IMPORTANTE:
+
+   Quando a carta está virada, o hover NÃO deve
+   alterar a transformação.
+
+   Isso evita que o conteúdo da carta desapareça
+   ou volte para o símbolo "?" ao passar o mouse.
+*/
+
+.card.flipped:hover .card-inner,
+.card.matched:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+
+/* =====================================================
+   MENSAGEM
+===================================================== */
+
+.message {
+    margin-top: 20px;
+
+    min-height: 25px;
+
+    color: #555555;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   BOTÃO REINICIAR
+===================================================== */
+
+.restart-button {
+    margin-top: 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(135deg, #667eea, #764ba2);
+
+    color: white;
+
+    padding: 12px 25px;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.restart-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 15px rgba(102, 126, 234, 0.4);
+}
+
+.restart-button:active {
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   MODAL DE VITÓRIA
+===================================================== */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.65);
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+
+    z-index: 1000;
+}
+
+
+/*
+   O JavaScript adiciona "show" quando o jogador vence.
+*/
+
+.modal.show {
+    display: flex;
+}
+
+
+/* =====================================================
+   CONTEÚDO DO MODAL
+===================================================== */
+
+.modal-content {
+    width: 100%;
+    max-width: 400px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.3);
+
+    animation:
+        modalAnimation 0.3s ease;
+}
+
+
+@keyframes modalAnimation {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scale(1);
+    }
+}
+
+
+.trophy {
+    font-size: 4rem;
+
+    margin-bottom: 10px;
+}
+
+.modal-content h2 {
+    color: #333333;
+
+    font-size: 2rem;
+
+    margin-bottom: 10px;
+}
+
+.modal-content > p {
+    color: #666666;
+
+    margin-bottom: 20px;
+}
+
+
+/* =====================================================
+   RESULTADO
+===================================================== */
+
+.result {
+    background-color: #f5f6fa;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    margin-bottom: 20px;
+}
+
+.result p {
+    color: #555555;
+
+    margin: 8px 0;
+}
+
+.result strong {
+    color: #333333;
+}
+
+
+/* =====================================================
+   TABLETS
+===================================================== */
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .game-container {
+        padding: 25px;
+    }
+
+    .game-header h1 {
+        font-size: 1.9rem;
+    }
+
+    .game-board {
+        gap: 12px;
+    }
+
+    .card-front,
+    .card-back {
+        font-size: 2.5rem;
+    }
+}
+
+
+/* =====================================================
+   CELULARES
+===================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+    .game-container {
+        padding: 18px;
+
+        border-radius: 15px;
+    }
+
+    .game-header h1 {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+
+    /*
+       No celular usamos 3 colunas.
+
+       3 colunas x 4 linhas = 12 cartas.
+    */
+
+    .game-board {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 10px;
+    }
+
+
+    .card-front,
+    .card-back {
+        font-size: 2rem;
+
+        border-radius: 10px;
+    }
+
+
+    .game-info {
+        gap: 8px;
+    }
+
+    .info-box {
+        padding: 10px 5px;
+    }
+
+    .info-box span {
+        font-size: 0.75rem;
+    }
+
+    .info-box strong {
+        font-size: 1.1rem;
+    }
+
+
+    .restart-button {
+        width: 100%;
+    }
+}
+
+
+/* =====================================================
+   CELULARES MUITO PEQUENOS
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .game-container {
+        padding: 12px;
+    }
+
+    .game-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .game-board {
+        gap: 7px;
+    }
+
+    .card-front,
+    .card-back {
+        font-size: 1.6rem;
+    }
+}
